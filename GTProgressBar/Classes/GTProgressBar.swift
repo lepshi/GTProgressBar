@@ -10,7 +10,7 @@ import UIKit
 public class GTProgressBar: UIView {
     private let minimumProgressBarWidth: CGFloat = 20
     private let minimumProgressBarFillHeight: CGFloat = 1
-    private let backgroundView = NoClearView()
+    private let backgroundView = BackgroundImageView()
     private let fillView = NoClearView()
     private let progressLabel = UILabel()
     private var _progress: CGFloat = 1
@@ -353,6 +353,37 @@ public class GTProgressBar: UIView {
                     backgroundColor = oldValue
                 }
             }
+        }
+    }
+    
+    class BackgroundImageView: UIView {
+        let image: UIImageView = UIImageView(image: UIImage(named: "shape"))
+        
+        init() {
+            super.init(frame: .zero)
+            initUI()
+        }
+        
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            initUI()
+        }
+        
+        override public var backgroundColor: UIColor? {
+            didSet {
+                if backgroundColor == nil || backgroundColor == UIColor.clear {
+                    backgroundColor = oldValue
+                }
+            }
+        }
+        
+        func initUI() {
+            addSubview(image)
+            image.frame = frame
+        }
+        
+        override func layoutSubviews() {
+            image.frame = frame
         }
     }
 
